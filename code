@@ -1,0 +1,114 @@
+#include<Servo.h>
+Servo myservo;
+const int trig = 3;
+const int echo = 4;
+int duration = 0;
+int distance = 0;
+void setup()
+{
+  pinMode(11,OUTPUT);
+  pinMode(12,OUTPUT);
+  pinMode(9,OUTPUT);
+  pinMode(10,OUTPUT);
+  pinMode(3,OUTPUT);//trig
+  pinMode(4,OUTPUT);//echo
+  pinMode(13,OUTPUT);//light
+  pinMode(6,OUTPUT);//fan
+ pinMode(A0,OUTPUT);//motor
+ digitalWrite(3,HIGH);
+ digitalWrite(4,HIGH);
+  myservo.attach(5);
+  
+  
+  Serial.begin(9600);
+}String c;
+void loop()
+{
+if(Serial.available()>0)
+  {
+    c=Serial.readString();
+    
+
+    if((c=="fo")||(c=="forward"))
+    {
+      digitalWrite(11,HIGH);
+      digitalWrite(12,LOW);
+      digitalWrite(9,HIGH);
+      digitalWrite(10,LOW);
+      delay(50);
+      c='q';
+      
+      
+    }
+    else if((c=="ba")||(c=="backward"))
+    {
+      digitalWrite(11,LOW);
+      digitalWrite(12,HIGH);
+      digitalWrite(9,LOW);
+      digitalWrite(10,HIGH);
+      delay(50);
+          
+    }   
+    else if((c=="ri")||(c=="turn right"))
+    {
+      digitalWrite(11,LOW);
+      digitalWrite(12,HIGH);
+      digitalWrite(9,LOW);
+      digitalWrite(10,LOW);
+            delay(50);
+    
+    } 
+    else if((c=="le")||(c=="turn left"))
+    {
+      digitalWrite(11,LOW);
+      digitalWrite(12,LOW);
+      digitalWrite(9,LOW);
+      digitalWrite(10,HIGH);
+       delay(50);
+  
+    }  
+     else if((c=="st")||(c=="stop"))
+    {
+      digitalWrite(11,LOW);
+      digitalWrite(12,LOW);
+      digitalWrite(9,LOW);
+      digitalWrite(10,LOW);
+       delay(50);
+   
+    } 
+     else if((c=="lco")||(c=="lock open"))
+    {myservo.write(90);        // waits 50ms for the servo to reach the position 
+  delay(5);
+      
+    }
+      else if ((c=="locf")||(c=="lock close"))
+  {
+    myservo.write(0);
+       delay(5);
+  }
+  else if ((c=="lo")||(c=="LED on"))
+  {
+    digitalWrite(13,HIGH);
+  }
+  else if ((c=="lof")||(c=="LED off"))
+  {
+    digitalWrite(13,LOW);
+  }
+  else if ((c=="fo")||(c=="fan on"))
+  {
+    digitalWrite(5,HIGH);
+  }
+  else if ((c=="fof")||(c=="fan of"))
+  {
+    digitalWrite(5,LOW);
+  }
+   else if ((c=="mo")||(c=="motor on"))
+  {
+    digitalWrite(A0,HIGH);
+  }
+  else if ((c=="mof")||(c=="motor of"))
+  {
+    digitalWrite(A0,LOW);
+  }
+  }
+  }
